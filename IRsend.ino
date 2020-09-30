@@ -4,43 +4,15 @@
 // For Arduino Uno: pin 3
 IRsend irsend;
 
-// Mark and space, in microseconds
-#define B_S 1050,950
-#define B_M 1050,1950
-#define B_L 1050,2900
-
-const unsigned int CodesMenu[] PROGMEM =
-{
-    3015,5895, 1035,2940, 1035,1950, 1035,945, 1035,1950, 1035,2940, 1035,945, 1035
-};
-const unsigned int CodesMod[] PROGMEM =
-{
-    3030,5895, 1035,2940, 1035,1935, 1035,960, 1035,1935, 1050,1935, 1050,2925, 1035
-};
-const unsigned int CodesEsc[] PROGMEM =
-{
-    3030,5880, 1035,2940, 1050,1935, 1035,960, 1035,2940, 1035,945, 1035,1950, 1035
-};
-const unsigned int CodesVal[] PROGMEM =
-{
-    3015,5895, 1035,2940, 1035,1950, 1035,1935, 1050,945, 1035,1950, 1035,1935, 1035
-};
-const unsigned int CodesLeft[] PROGMEM =
-{
-    3045,5895, 1035,2940, 1035,945, 1035,2940, 1050,1935, 1035,945, 1035,1950, 1050
-};
-const unsigned int CodesRight[] PROGMEM =
-{
-    3060,5895, 1035,2925, 1050,945, 1035,2940, 1035,945, 1050,2925, 1050,945, 1035
-};
-const unsigned int CodesUp[] PROGMEM =
-{
-    3045,5895, 1050,2925, 1035,960, 1035,2925, 1050,945, 1035,1950, 1035,2940, 1035
-};
-const unsigned int CodesDown[] PROGMEM =
-{
-    3045,5895, 1035,2940, 1035,960, 1035,1935, 1035,2940, 1050,1935, 1035,945, 1050
-};
+// Raw IR LED timing values, to be passed to irsend.sendRaw
+const unsigned int irTmgMenu[] PROGMEM = {3015,5895,1035,2940,1035,1950,1035,945,1035,1950,1035,2940,1035,945,1035};
+const unsigned int irTmgMod[] PROGMEM = {3030,5895,1035,2940,1035,1935,1035,960,1035,1935,1050,1935,1050,2925,1035};
+const unsigned int irTmgEsc[] PROGMEM = {3030,5880,1035,2940,1050,1935,1035,960,1035,2940,1035,945,1035,1950,1035};
+const unsigned int irTmgVal[] PROGMEM = {3015,5895,1035,2940,1035,1950,1035,1935,1050,945,1035,1950,1035,1935,1035};
+const unsigned int irTmgLeft[] PROGMEM = {3045,5895,1035,2940,1035,945,1035,2940,1050,1935,1035,945,1035,1950,1050};
+const unsigned int irTmgRight[] PROGMEM = {3060,5895,1035,2925,1050,945,1035,2940,1035,945,1050,2925,1050,945,1035};
+const unsigned int irTmgUp[] PROGMEM = {3045,5895,1050,2925,1035,960,1035,2925,1050,945,1035,1950,1035,2940,1035};
+const unsigned int irTmgDown[] PROGMEM = {3045,5895,1035,2940,1035,960,1035,1935,1035,2940,1050,1935,1035,945,1050};
 
 char recvOneChar()
 {
@@ -63,20 +35,19 @@ void setup()
 {
     pinMode(LED_BUILTIN, OUTPUT);  // Initialize onboard LED as output 
     digitalWrite(LED_BUILTIN, LOW);  // Turn the LED off
-    // pinMode(3, OUTPUT);
-    // digitalWrite(3, HIGH);
 
     Serial.begin(9600);
     Serial.println("<Arduino is ready>");
     Serial.println();
-    Serial.println("For 'menu' button, type 'm' and press the 'Send' button.");
-    Serial.println("For 'mod' button, type 'o' and press the 'Send' button.");
-    Serial.println("For 'esc' button, type 'e' and press the 'Send' button.");
-    Serial.println("For 'val' button, type 'v' and press the 'Send' button.");
-    Serial.println("For 'left' button, type 'l' and press the 'Send' button.");
-    Serial.println("For 'right' button, type 'r' and press the 'Send' button.");
-    Serial.println("For 'up' button, type 'u' and press the 'Send' button.");
-    Serial.println("For 'down' button, type 'd' and press the 'Send' button.");
+    Serial.println("Type one of the following letters, then hit <Enter> (or click the 'Send' button):");
+    Serial.println("-> menu = m");
+    Serial.println("-> mod = o");
+    Serial.println("-> esc = e");
+    Serial.println("-> val = v");
+    Serial.println("-> left = l");
+    Serial.println("-> right = r");
+    Serial.println("-> up = u");
+    Serial.println("-> down = d");
 } // setup
 
 void loop()
@@ -84,66 +55,66 @@ void loop()
     char c = recvOneChar();
     if (c == 'm')
     {
-        const int n = sizeof(CodesMenu) / sizeof(CodesMenu[0]);
+        const int n = sizeof(irTmgMenu) / sizeof(irTmgMenu[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'menu'...");
-        sendIrCodes(CodesMenu, buffer, n);
+        sendIrCodes(irTmgMenu, buffer, n);
     }
     else if (c == 'o')
     {
-        const int n = sizeof(CodesMod) / sizeof(CodesMod[0]);
+        const int n = sizeof(irTmgMod) / sizeof(irTmgMod[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'mod'...");
-        sendIrCodes(CodesMod, buffer, n);
+        sendIrCodes(irTmgMod, buffer, n);
     }
     else if (c == 'e')
     {
-        const int n = sizeof(CodesEsc) / sizeof(CodesEsc[0]);
+        const int n = sizeof(irTmgEsc) / sizeof(irTmgEsc[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'esc'...");
-        sendIrCodes(CodesEsc, buffer, n);
+        sendIrCodes(irTmgEsc, buffer, n);
     }
     else if (c == 'v')
     {
-        const int n = sizeof(CodesVal) / sizeof(CodesVal[0]);
+        const int n = sizeof(irTmgVal) / sizeof(irTmgVal[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'val'...");
-        sendIrCodes(CodesVal, buffer, n);
+        sendIrCodes(irTmgVal, buffer, n);
     }
     else if (c == 'l')
     {
-        const int n = sizeof(CodesLeft) / sizeof(CodesLeft[0]);
+        const int n = sizeof(irTmgLeft) / sizeof(irTmgLeft[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'left'...");
-        sendIrCodes(CodesLeft, buffer, n);
+        sendIrCodes(irTmgLeft, buffer, n);
     }
     else if (c == 'r')
     {
-        const int n = sizeof(CodesRight) / sizeof(CodesRight[0]);
+        const int n = sizeof(irTmgRight) / sizeof(irTmgRight[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'right'...");
-        sendIrCodes(CodesRight, buffer, n);
+        sendIrCodes(irTmgRight, buffer, n);
     }
     else if (c == 'u')
     {
-        const int n = sizeof(CodesUp) / sizeof(CodesUp[0]);
+        const int n = sizeof(irTmgUp) / sizeof(irTmgUp[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'up'...");
-        sendIrCodes(CodesUp, buffer, n);
+        sendIrCodes(irTmgUp, buffer, n);
     }
     else if (c == 'd')
     {
-        const int n = sizeof(CodesDown) / sizeof(CodesDown[0]);
+        const int n = sizeof(irTmgDown) / sizeof(irTmgDown[0]);
         unsigned int buffer[n];
 
         Serial.println("Sending 'down'...");
-        sendIrCodes(CodesDown, buffer, n);
+        sendIrCodes(irTmgDown, buffer, n);
     } // if
 } // loop
