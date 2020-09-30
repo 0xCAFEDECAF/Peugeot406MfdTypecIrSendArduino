@@ -22,7 +22,7 @@ Have fun with it!
 
 ## 📖 License <a name = "license"></a>
 
-This library is open-source and licensed under the [MIT license](http://opensource.org/licenses/MIT).
+This sketch is open-source and licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 Do whatever you like with it, but contributions are appreciated!
 
