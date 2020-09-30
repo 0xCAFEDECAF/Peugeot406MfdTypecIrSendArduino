@@ -2,11 +2,11 @@
 
 ## 🎈 Description
 
-Here is an Arduino sketch that you can upload to an Arduino Uno, to operate the multi-functional LCD display (MFD) type "C" as found in Peugeots model 406:
+Here is an Arduino sketch that you can upload to an Arduino Uno, to operate the multi-functional LCD display (MFD) type "C" as found in Peugeots model 406. The MFD type "C" does not have buttons and can only be operated with an infrared remote control:
 
 <img src="./Peugeot 406 MFD type C remote control.jpg" width="300">
 
-The MFD type "C" does not have buttons and can only be operated with an infrared remote control. Unfortunately, these remote-control units often get lost, making it no longer possible to use set the date and time.
+Unfortunately, these remote-control units often get lost, making it no longer possible to use set the date and time.
 
 These MFDs are pretty picky about the timing of the IR signals, but after a few hours of experimenting I found the correct timings, which have proven to work every time I tested.
 
