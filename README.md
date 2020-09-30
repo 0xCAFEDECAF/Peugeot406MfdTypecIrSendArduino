@@ -22,6 +22,8 @@ Have fun with it!
 
 ## 🔌 Schematic
 
+Schematic is really simple. You need an Arduino Uno or any variant, a [940 nm IR LED](https://www.tinytronics.nl/shop/en/others/led/ir-led-940nm-5mm-bright) and a 150 Ohm resistor.
+
 <img src="./Breadboard_bb.png" width="250">
 
 ## 📖 License <a name = "license"></a>
